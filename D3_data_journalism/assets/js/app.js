@@ -51,8 +51,7 @@ d3.csv("assets/data/data.csv").then(function(CensusData) {
     chartGroup.append("g").attr("transform", `translate(0, ${height})`).call(bottomAxis);
     chartGroup.append("g").call(leftAxis);
 
-    // Start editing here
-    
+      
     // append circles to data points
     var circlesGroup = chartGroup.selectAll("circle")
     .data(CensusData)
@@ -60,9 +59,21 @@ d3.csv("assets/data/data.csv").then(function(CensusData) {
     .append("circle")
     .attr("cx", d => xLinearScale(d.poverty))
     .attr("cy", d => yLinearScale(d.healthcare))
-    .attr("r", "10")
+    .attr("r", "15")
     .attr("fill", "lightblue")
-    // .attr("opacity", ".5");
+    .classed("stateCircle", true);
+    
+    circlesGroup.append("text")
+    .text(d=> d.abbr)
+    .attr("cx", d => xLinearScale(d.poverty))
+    .attr("cy", d => yLinearScale(d.healthcare))
+    .classed("stateText", true);
+
+    // var CircleLabels = circlesGroup("text")
+    // .text(d=> d.abbr)
+    // .attr("dx", d => xLinearScale(d.poverty))
+    // .attr("dy", d => yLinearScale(d.healthcare))
+    // .classed("stateAbbr",true);
     
 
     // Step 1: Append a div to the body to create tooltips, assign it a class
@@ -83,6 +94,5 @@ d3.csv("assets/data/data.csv").then(function(CensusData) {
         toolTip.style("display", "none");
     });
 
-    // Edits to here
 })
 
