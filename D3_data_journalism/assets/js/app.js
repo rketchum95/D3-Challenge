@@ -69,7 +69,7 @@ d3.csv("assets/data/data.csv").then(function(CensusData) {
     .enter()
     .append("text")
     .attr("x", d => xLinearScale(d.poverty))
-    .attr("y", d => yLinearScale(d.healthcare))
+    .attr("y", d => yLinearScale(d.healthcare)+4)
     .text(d=> d.abbr)
     .classed("stateText", true);
 
