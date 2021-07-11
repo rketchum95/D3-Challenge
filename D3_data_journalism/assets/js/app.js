@@ -1,4 +1,3 @@
-// @TODO: YOUR CODE HERE!
 // Chart set up
 var svgWidth = 960;
 var svgHeight = 500;
@@ -30,8 +29,7 @@ d3.csv("assets/data/data.csv").then(function(CensusData) {
     CensusData.forEach(function(data){
         data.poverty = +data.poverty;
         data.healthcare = +data.healthcare;
-        var state = data.state;
-     
+        var state = data.state; 
     });
     
     // Create Scales
@@ -90,8 +88,7 @@ d3.csv("assets/data/data.csv").then(function(CensusData) {
     .style("font-weight", "bold")
     .text("Poverty (%)");
         
-
-    // // create tooltip
+    // create tooltip
     var toolTip = d3.tip()
     .attr("class", "d3-tip")
     .offset([80, -60])
