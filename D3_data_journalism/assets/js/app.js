@@ -25,14 +25,13 @@ var chartGroup = svg.append("g")
 
 // Load csv data
 d3.csv("assets/data/data.csv").then(function(CensusData) {
-    // console.log(CensusData);
+
      // Format the data
     CensusData.forEach(function(data){
         data.poverty = +data.poverty;
         data.healthcare = +data.healthcare;
         var state = data.state;
-        // console.log(data.poverty);
-        // console.log(data.healthcare);      
+     
     });
     
     // Create Scales
