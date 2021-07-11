@@ -25,13 +25,14 @@ var chartGroup = svg.append("g")
 
 // Load csv data
 d3.csv("assets/data/data.csv").then(function(CensusData) {
-    console.log(CensusData);
+    // console.log(CensusData);
      // Format the data
     CensusData.forEach(function(data){
         data.poverty = +data.poverty;
         data.healthcare = +data.healthcare;
-        console.log(data.poverty);
-        console.log(data.healthcare);      
+        var state = data.state;
+        // console.log(data.poverty);
+        // console.log(data.healthcare);      
     });
     
     // Create Scales
@@ -60,39 +61,39 @@ d3.csv("assets/data/data.csv").then(function(CensusData) {
     .attr("cx", d => xLinearScale(d.poverty))
     .attr("cy", d => yLinearScale(d.healthcare))
     .attr("r", "15")
-    .attr("fill", "lightblue")
-    .classed("stateCircle", true);
-    
-    circlesGroup.append("text")
+    .classed("stateCircle", true)
+  
+    // // add text to circles
+    var circleText = chartGroup.selectAll("text")
+    .data(CensusData)
+    .enter()
+    .append("text")
+    .attr("x", d => xLinearScale(d.poverty))
+    .attr("y", d => yLinearScale(d.healthcare))
     .text(d=> d.abbr)
-    .attr("cx", d => xLinearScale(d.poverty))
-    .attr("cy", d => yLinearScale(d.healthcare))
     .classed("stateText", true);
 
-    // var CircleLabels = circlesGroup("text")
-    // .text(d=> d.abbr)
-    // .attr("dx", d => xLinearScale(d.poverty))
-    // .attr("dy", d => yLinearScale(d.healthcare))
-    // .classed("stateAbbr",true);
+    console.log(circleText);
+
     
 
-    // Step 1: Append a div to the body to create tooltips, assign it a class
-    // =======================================================
-    var toolTip = d3.select("body").append("div")
-    .attr("class", "tooltip");
+    // // Append a div to the body to create tooltips, assign it a class
+    // // =======================================================
+    // var toolTip = d3.select("body").append("div")
+    // .attr("class", "tooltip");
 
-    // Step 2: Add an onmouseover event to display a tooltip
-    // ========================================================
-    circlesGroup.on("mouseover", function(d, i) {
-    toolTip.style("display", "block");
-    toolTip.html(`Healthcare: <strong>${CensusData[i]}</strong> <hr> Poverty: <strong>${d.poverty}`)
-        .style("left", d3.event.pageX + "px")
-        .style("top", d3.event.pageY + "px");
-    })
-    // Step 3: Add an on mouseout event to make the tooltip invisible
-    .on("mouseout", function() {
-        toolTip.style("display", "none");
-    });
+    // // Step 2: Add an onmouseover event to display a tooltip
+    // // ========================================================
+    // circlesGroup.on("mouseover", function(d, i) {
+    // toolTip.style("display", "block");
+    // toolTip.html(`${d.state}: <hr> Healthcare: ${d.healthcare}% <br> Poverty: ${d.poverty}%`)
+    //     .style("left", d3.event.pageX + "px")
+    //     .style("top", d3.event.pageY + "px");
+    // })
+    // // Step 3: Add an on mouseout event to make the tooltip invisible
+    // .on("mouseout", function() {
+    //     toolTip.style("display", "none");
+    // });
 
 })
 
