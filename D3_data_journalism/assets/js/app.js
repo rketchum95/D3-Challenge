@@ -89,23 +89,27 @@ d3.csv("assets/data/data.csv").then(function(CensusData) {
     .attr("class", "axisText")
     .style("font-size", "18px")
     .style("font-weight", "bold")
-    .text("Poverty (%");
+    .text("Poverty (%)");
         
 
-    // // // create tooltip
-    // var toolTip = d3.select("body").append("div")
-    // .attr("class", "tooltip");
+    // // create tooltip
+    var toolTip = d3.tip()
+    .attr("class", "d3-tip")
+    .offset([80, -60])
+    .html(function(d) {
+      return (`${d.state}: <br> Healthcare: ${d.healthcare}% <br> Poverty: ${d.poverty}%`);
+    });
 
-    // circlesGroup.on("mouseover", function(d, i) {
-    // toolTip.style("display", "block");
-    // toolTip.html(`${d.state}: <hr> Healthcare: ${d.healthcare}% <br> Poverty: ${d.poverty}%`)
-    //     .style("left", d3.event.pageX + "px")
-    //     .style("top", d3.event.pageY + "px");
-    // })
+    chartGroup.call(toolTip);
+   
+    circlesGroup.on("mouseover", function(d) {
+      toolTip.show(d, this);
+    })
+    
+    .on("mouseout", function(d) {
+      toolTip.hide(d);
+    });
 
-    // .on("mouseout", function() {
-    //     toolTip.style("display", "none");
-    // });
 
 })
 
