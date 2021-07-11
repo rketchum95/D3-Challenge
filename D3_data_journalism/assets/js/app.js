@@ -41,8 +41,8 @@ d3.csv("assets/data/data.csv").then(function(CensusData) {
     .range([2,width]);
     
     var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(CensusData, d => d.healthcare)])
-    .range([height, 0]);
+    .domain([2, d3.max(CensusData, d => d.healthcare)])
+    .range([height, 2]);
 
     // Create Axes
     var bottomAxis = d3.axisBottom(xLinearScale);
@@ -69,28 +69,40 @@ d3.csv("assets/data/data.csv").then(function(CensusData) {
     .enter()
     .append("text")
     .attr("x", d => xLinearScale(d.poverty))
-    .attr("y", d => yLinearScale(d.healthcare)+4)
+    .attr("y", d => yLinearScale(d.healthcare)+4) //+4 adjusts verticle alignment of text to fit in circle
     .text(d=> d.abbr)
     .classed("stateText", true);
 
-    console.log(circleText);
+    // axes labels
+    chartGroup.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left)
+    .attr("x", 0 - (height / 1.5))
+    .attr("dy", "1em")
+    .attr("class", "axisText")
+    .style("font-size", "18px")
+    .style("font-weight", "bold")
+    .text("Lacks Healthcare (%)");
 
-    
+    chartGroup.append("text")
+    .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
+    .attr("class", "axisText")
+    .style("font-size", "18px")
+    .style("font-weight", "bold")
+    .text("Poverty (%");
+        
 
-    // // Append a div to the body to create tooltips, assign it a class
-    // // =======================================================
+    // // // create tooltip
     // var toolTip = d3.select("body").append("div")
     // .attr("class", "tooltip");
 
-    // // Step 2: Add an onmouseover event to display a tooltip
-    // // ========================================================
     // circlesGroup.on("mouseover", function(d, i) {
     // toolTip.style("display", "block");
     // toolTip.html(`${d.state}: <hr> Healthcare: ${d.healthcare}% <br> Poverty: ${d.poverty}%`)
     //     .style("left", d3.event.pageX + "px")
     //     .style("top", d3.event.pageY + "px");
     // })
-    // // Step 3: Add an on mouseout event to make the tooltip invisible
+
     // .on("mouseout", function() {
     //     toolTip.style("display", "none");
     // });
